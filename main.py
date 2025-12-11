@@ -727,5 +727,29 @@ def main():
     application.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__main__': 
+    # For Render deployment, we need to run a web server
+    from aiohttp import web
+    import asyncio
+    
+    async def health_check(request):
+        return web.Response(text="Bot is running")
+    
+    async def start_bot():
+        main()
+    
+    # Check if we're on Render (has PORT env variable)
+    port = os.getenv('PORT')
+    if port:
+        # Running on Render - start web server for health checks
+        app = web.Application()
+        app.router.add_get('/', health_check)
+        
+        # Start bot in background
+        asyncio.create_task(asyncio.to_thread(main))
+        
+        # Start web server
+        web.run_app(app, host='0.0.0.0', port=int(port))
+    else:
+        # Running locally
+        main()
