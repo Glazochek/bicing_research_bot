@@ -163,8 +163,8 @@ async def add_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def add_serial_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Store Serial ID and ask for Location"""
     if update.message.text == 'Cancel':
-        context.user_data. clear()
-        await update.message. reply_text("Cancelled", reply_markup=ReplyKeyboardRemove())
+        context.user_data.clear()
+        await update.message.reply_text("Cancelled", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     
     context.user_data['research_data']['Serial ID'] = update.message.text
@@ -189,9 +189,9 @@ async def add_location(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return SERIAL_ID
     elif update.message.location:
         latitude = update.message.location.latitude
-        longitude = update.message. location.longitude
+        longitude = update.message.location.longitude
         location_text = f"{latitude}, {longitude}"
-        context. user_data['research_data']['Location'] = location_text
+        context.user_data['research_data']['Location'] = location_text
     else:
         await update.message.reply_text("Please share location or skip:")
         return LOCATION
@@ -210,13 +210,13 @@ async def add_parking_angel(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if 'Is Straight Parking Angel' not in context.user_data['research_data']:
             context.user_data['research_data']['Is Straight Parking Angel'] = 'N/A'
     elif update.message.text == 'Back':
-        await update.message. reply_text(
+        await update.message.reply_text(
             "Location:",
             reply_markup=get_location_keyboard()
         )
         return LOCATION
     else:
-        text = update.message.text. lower()
+        text = update.message.text.lower()
         if text not in ['true', 'false']: 
             await update.message.reply_text("Select 'True' or 'False':")
             return PARKING_ANGEL
@@ -235,7 +235,7 @@ async def add_tires_rate(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Only set N/A if not already set
         if 'Tires Rate' not in context.user_data['research_data']:
             context.user_data['research_data']['Tires Rate'] = 'N/A'
-    elif update. message.text == 'Back': 
+    elif update.message.text == 'Back': 
         await update.message.reply_text(
             "Is Straight Parking Angel?",
             reply_markup=get_boolean_keyboard()
@@ -256,19 +256,19 @@ async def add_tires_rate(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def add_seat_height(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Store Seat Height and ask for Appearence Rate"""
-    if update. message.text == 'Skip': 
+    if update.message.text == 'Skip': 
         # Only set N/A if not already set
         if 'Seat Hight' not in context.user_data['research_data']:
             context.user_data['research_data']['Seat Hight'] = 'N/A'
     elif update.message.text == 'Back':
-        await update.message. reply_text(
+        await update.message.reply_text(
             "Tires Rate (0-10):",
             reply_markup=get_rate_keyboard()
         )
         return TIRES_RATE
     else:
         if not update.message.text.isdigit() or int(update.message.text) < 1 or int(update.message.text) > 10:
-            await update.message. reply_text("Select a valid height (1-10):")
+            await update.message.reply_text("Select a valid height (1-10):")
             return SEAT_HEIGHT
         context.user_data['research_data']['Seat Hight'] = update.message.text
     
@@ -285,15 +285,15 @@ async def add_appearence_rate(update: Update, context: ContextTypes.DEFAULT_TYPE
         # Only set N/A if not already set
         if 'Appearence Rate' not in context.user_data['research_data']:
             context.user_data['research_data']['Appearence Rate'] = 'N/A'
-    elif update.message. text == 'Back':
+    elif update.message.text == 'Back':
         await update.message.reply_text(
             "Seat Hight (1-10):",
             reply_markup=get_seat_height_keyboard()
         )
         return SEAT_HEIGHT
     else:
-        if not update.message.text.isdigit() or int(update.message. text) < 0 or int(update.message.text) > 10:
-            await update. message.reply_text("Select a valid rate (0-10):")
+        if not update.message.text.isdigit() or int(update.message.text) < 0 or int(update.message.text) > 10:
+            await update.message.reply_text("Select a valid rate (0-10):")
             return APPEARENCE_RATE
         context.user_data['research_data']['Appearence Rate'] = update.message.text
     
@@ -304,25 +304,25 @@ async def add_appearence_rate(update: Update, context: ContextTypes.DEFAULT_TYPE
     return LEFT_BRAKE_RATE
 
 
-async def add_left_brake_rate(update:  Update, context: ContextTypes. DEFAULT_TYPE):
+async def add_left_brake_rate(update:  Update, context: ContextTypes.DEFAULT_TYPE):
     """Store Left Brake Rate and ask for Right Brake Rate"""
     if update.message.text == 'Skip':
         # Only set N/A if not already set
         if 'Left Brake Rate' not in context.user_data['research_data']:
             context.user_data['research_data']['Left Brake Rate'] = 'N/A'
-    elif update. message.text == 'Back': 
+    elif update.message.text == 'Back': 
         await update.message.reply_text(
             "Appearence Rate (0-10):",
             reply_markup=get_rate_keyboard()
         )
         return APPEARENCE_RATE
     else:
-        if not update.message.text.isdigit() or int(update.message. text) < 0 or int(update.message.text) > 10:
-            await update. message.reply_text("Select a valid rate (0-10):")
+        if not update.message.text.isdigit() or int(update.message.text) < 0 or int(update.message.text) > 10:
+            await update.message.reply_text("Select a valid rate (0-10):")
             return LEFT_BRAKE_RATE
-        context.user_data['research_data']['Left Brake Rate'] = update.message. text
+        context.user_data['research_data']['Left Brake Rate'] = update.message.text
     
-    await update. message.reply_text(
+    await update.message.reply_text(
         "Right Brake Rate (0-10):",
         reply_markup=get_rate_keyboard()
     )
@@ -334,15 +334,15 @@ async def add_right_brake_rate(update: Update, context: ContextTypes.DEFAULT_TYP
     if update.message.text == 'Skip':
         # Only set N/A if not already set
         if 'Right Brake Rate' not in context.user_data['research_data']:
-            context. user_data['research_data']['Right Brake Rate'] = 'N/A'
+            context.user_data['research_data']['Right Brake Rate'] = 'N/A'
     elif update.message.text == 'Back':
-        await update.message. reply_text(
+        await update.message.reply_text(
             "Left Brake Rate (0-10):",
             reply_markup=get_rate_keyboard()
         )
         return LEFT_BRAKE_RATE
     else:
-        if not update.message.text. isdigit() or int(update.message.text) < 0 or int(update.message. text) > 10:
+        if not update.message.text.isdigit() or int(update.message.text) < 0 or int(update.message.text) > 10:
             await update.message.reply_text("Select a valid rate (0-10):")
             return RIGHT_BRAKE_RATE
         context.user_data['research_data']['Right Brake Rate'] = update.message.text
@@ -360,17 +360,17 @@ async def add_pedaling_rate(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Only set N/A if not already set
         if 'Pedaling Rate' not in context.user_data['research_data']:
             context.user_data['research_data']['Pedaling Rate'] = 'N/A'
-    elif update. message.text == 'Back': 
+    elif update.message.text == 'Back': 
         await update.message.reply_text(
             "Right Brake Rate (0-10):",
             reply_markup=get_rate_keyboard()
         )
         return RIGHT_BRAKE_RATE
     else:
-        if not update.message.text. isdigit() or int(update.message.text) < 0 or int(update.message. text) > 10:
+        if not update.message.text.isdigit() or int(update.message.text) < 0 or int(update.message.text) > 10:
             await update.message.reply_text("Select a valid rate (0-10):")
             return PEDALING_RATE
-        context. user_data['research_data']['Pedaling Rate'] = update. message.text
+        context.user_data['research_data']['Pedaling Rate'] = update.message.text
     
     await update.message.reply_text(
         "Speed Rate (0-10):",
@@ -392,7 +392,7 @@ async def add_speed_rate(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return PEDALING_RATE
     else: 
-        if not update.message. text.isdigit() or int(update.message.text) < 0 or int(update. message.text) > 10:
+        if not update.message.text.isdigit() or int(update.message.text) < 0 or int(update.message.text) > 10:
             await update.message.reply_text("Select a valid rate (0-10):")
             return SPEED_RATE
         context.user_data['research_data']['Speed Rate'] = update.message.text
@@ -406,18 +406,18 @@ async def add_speed_rate(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def add_note(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Store Note, add timestamp, show summary, and save to CSV"""
-    if update. message.text == 'Skip': 
+    if update.message.text == 'Skip': 
         # Only set N/A if not already set
         if 'Note' not in context.user_data['research_data']: 
             context.user_data['research_data']['Note'] = 'N/A'
     elif update.message.text == 'Back':
-        await update.message. reply_text(
+        await update.message.reply_text(
             "Speed Rate (0-10):",
             reply_markup=get_rate_keyboard()
         )
         return SPEED_RATE
     else:
-        context.user_data['research_data']['Note'] = update.message. text
+        context.user_data['research_data']['Note'] = update.message.text
     
     # Automatically add current date and time
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -445,7 +445,7 @@ async def add_note(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def delete_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Delete a record by Serial ID"""
     if not context.args:
-        await update.message. reply_text("Usage: /delete <Serial ID>")
+        await update.message.reply_text("Usage: /delete <Serial ID>")
         return
     
     serial_id = ' '.join(context.args)
@@ -465,7 +465,7 @@ async def delete_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def update_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Start the update conversation"""
     if not context.args:
-        await update.message. reply_text("Usage: /update <Serial ID>")
+        await update.message.reply_text("Usage: /update <Serial ID>")
         return ConversationHandler.END
     
     serial_id = ' '.join(context.args)
@@ -490,7 +490,7 @@ async def update_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [[col] for col in columns]
     keyboard.append(['Cancel'])
     
-    await update. message.reply_text(
+    await update.message.reply_text(
         f"Update field for '{serial_id}':",
         reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
     )
@@ -503,7 +503,7 @@ async def update_field(update: Update, context:  ContextTypes.DEFAULT_TYPE):
     
     if field == 'Cancel': 
         context.user_data.clear()
-        await update.message. reply_text("Cancelled", reply_markup=ReplyKeyboardRemove())
+        await update.message.reply_text("Cancelled", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     
     if field not in CSV_COLUMNS or field in ['Serial ID', 'Date']: 
@@ -580,7 +580,7 @@ async def update_value(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 value = value.lower()
             elif field == 'Seat Hight':
                 if not value.isdigit() or int(value) < 1 or int(value) > 10:
-                    await update.message. reply_text("Select a valid height (1-10):")
+                    await update.message.reply_text("Select a valid height (1-10):")
                     return UPDATE_VALUE
     
     # Update the record
@@ -647,8 +647,8 @@ async def error_handler(update: Update, context:  ContextTypes.DEFAULT_TYPE):
     # For other errors, try to notify the user
     try:
         if update and update.effective_message:
-            await update. effective_message.reply_text(
-                "An error occurred. Please try again."
+            await update.effective_message.reply_text(
+                "An error occurred.Please try again."
             )
     except Exception: 
         pass
@@ -683,11 +683,11 @@ def main():
         states={
             SERIAL_ID: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_serial_id)],
             LOCATION: [
-                MessageHandler(filters. LOCATION, add_location),
+                MessageHandler(filters.LOCATION, add_location),
                 MessageHandler(filters.TEXT & ~filters.COMMAND, add_location)
             ],
             PARKING_ANGEL:  [MessageHandler(filters.TEXT & ~filters.COMMAND, add_parking_angel)],
-            TIRES_RATE: [MessageHandler(filters.TEXT & ~filters. COMMAND, add_tires_rate)],
+            TIRES_RATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_tires_rate)],
             SEAT_HEIGHT: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_seat_height)],
             APPEARENCE_RATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_appearence_rate)],
             LEFT_BRAKE_RATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_left_brake_rate)],
@@ -703,9 +703,9 @@ def main():
     update_handler = ConversationHandler(
         entry_points=[CommandHandler('update', update_start)],
         states={
-            UPDATE_FIELD: [MessageHandler(filters. TEXT & ~filters.COMMAND, update_field)],
+            UPDATE_FIELD: [MessageHandler(filters.TEXT & ~filters.COMMAND, update_field)],
             UPDATE_VALUE: [
-                MessageHandler(filters. LOCATION, update_value),
+                MessageHandler(filters.LOCATION, update_value),
                 MessageHandler(filters.TEXT & ~filters.COMMAND, update_value)
             ],
         },
